@@ -1,18 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract HelloWorld {
-    string public message;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-    constructor(string memory initialMessage) {
-        message = initialMessage;
-    }
-
-    function setMessage(string memory newMessage) public {
-        message = newMessage;
-    }
-
-    function getMessage() public view returns (string memory) {
-        return message;
+contract MyToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("MyToken", "MTK") {
+        _mint(msg.sender, initialSupply);
     }
 }
