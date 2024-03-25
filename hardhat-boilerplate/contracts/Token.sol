@@ -7,7 +7,6 @@ pragma solidity ^0.8.9;
 // We import this library to be able to use console.log
 import "hardhat/console.sol";
 
-
 // This is the main building block for smart contracts.
 contract Token {
     // Some string type variables to identify the token.
@@ -74,5 +73,42 @@ contract Token {
      */
     function balanceOf(address account) external view returns (uint256) {
         return balances[account];
+    }
+
+    // 定义一个结构体来表示悬赏任务
+    struct Task {
+        string title;
+        string description;
+        uint256 reward;
+        bool completed;
+        uint256 id;
+    }
+
+    // 定义一个映射来存储每个用户的悬赏任务
+    mapping(address => Task[]) public userTasks;
+
+    uint256 private taskIdCounter = 0;
+
+    function addTask(string memory title, string memory description) public {
+        // 创建一个新的任务
+        Task memory newTask = Task(title, description, 1, false, taskIdCounter);
+        // 将任务添加到调用者的任务列表中
+
+        userTasks[msg.sender].push(newTask);
+        taskIdCounter++;
+    }
+
+    function completeTask(uint256 taskId) public {
+        // 确保任务存在
+        require(taskId < userTasks[msg.sender].length, "Task does not exist");
+        // 确保任务未完成
+        require(
+            !userTasks[msg.sender][taskId].completed,
+            "Task already completed"
+        );
+        // 将任务标记为已完成
+        userTasks[msg.sender][taskId].completed = true;
+        // 奖励调用者
+        balances[msg.sender] += userTasks[msg.sender][taskId].reward;
     }
 }
