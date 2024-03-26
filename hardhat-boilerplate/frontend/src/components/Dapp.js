@@ -55,15 +55,16 @@ export class Dapp extends React.Component {
     };
 
     this.state = this.initialState;
-
-    this.contract.on("Transfer", (from, to, value, event) => {
-      console.log(
-        `Transfer from ${from} to ${to} of value ${value.toString()}`
-      );
-      // 在这里根据事件更新UI或状态
-    });
   }
 
+  componentDidMount() {
+    // this._token.on("Transfer", (from, to, value, event) => {
+    //   console.log(
+    //     `Transfer from ${from} to ${to} of value ${value.toString()}`
+    //   );
+    //   // 在这里根据事件更新UI或状态
+    // });
+  }
   render() {
     // Ethereum wallets inject the window.ethereum object. If it hasn't been
     // injected, we instruct the user to install a wallet.
@@ -237,6 +238,13 @@ export class Dapp extends React.Component {
       TokenArtifact.abi,
       this._provider.getSigner(0)
     );
+
+    this._token.on("Transfer", (from, to, value, event) => {
+      console.log(
+        `Transfer from ${from} to ${to} of value ${value.toString()}`
+      );
+      // 在这里根据事件更新UI或状态
+    });
   }
 
   // The next two methods are needed to start and stop polling data. While
