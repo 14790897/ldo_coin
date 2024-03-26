@@ -89,6 +89,11 @@ contract Token {
 
     uint256 private taskIdCounter = 0;
 
+    // The Transfer event helps off-chain aplications understand
+    // what happens within your contract.
+    event TaskAdded(address indexed user, uint256 taskId, string title);
+    event TaskCompleted(address indexed user, uint256 taskId);
+
     function addTask(string memory title, string memory description) public {
         // 创建一个新的任务
         Task memory newTask = Task(title, description, 1, false, taskIdCounter);
@@ -96,6 +101,8 @@ contract Token {
 
         userTasks[msg.sender].push(newTask);
         taskIdCounter++;
+        // Notify off-chain applications of the transfer.
+        emit TaskAdded(msg.sender, taskIdCounter, title);
     }
 
     function completeTask(uint256 taskId) public {
@@ -110,5 +117,6 @@ contract Token {
         userTasks[msg.sender][taskId].completed = true;
         // 奖励调用者
         balances[msg.sender] += userTasks[msg.sender][taskId].reward;
+        emit TaskCompleted(msg.sender, taskId);
     }
 }
