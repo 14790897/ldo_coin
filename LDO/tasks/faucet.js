@@ -15,7 +15,7 @@ task("faucet", "Sends ETH and tokens to an address")
     }
 
     const addressesFile =
-      __dirname + "/../frontend/src/contracts/contract-address.json";
+      __dirname + "/../frontend/components/contracts/contract-address.json";
 
     if (!fs.existsSync(addressesFile)) {
       console.error("You need to deploy your contract first");

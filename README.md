@@ -36,6 +36,10 @@ need to have [Coinbase Wallet](https://www.coinbase.com/wallet) or [Metamask](ht
 
 ### 获得所有测试账户
 
+#### 进入控制台
+
+npx hardhat console
+
 ```sh
 const accounts = await ethers.getSigners();
 console.log("Accounts:", accounts.map(account => account.address));

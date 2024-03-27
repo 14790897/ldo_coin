@@ -30,30 +30,30 @@ export default function Login({
 
   const signUp = async (formData: FormData) => {
     "use server";
-    try {
-      const origin = headers().get("origin");
-      const email = formData.get("email") as string;
-      const password = formData.get("password") as string;
-      const supabase = createClient();
-      console.log({ email, password, origin });
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: `${origin}/auth/callback`,
-        },
-      });
+    // try {
+    const origin = headers().get("origin");
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const supabase = createClient();
+    console.log({ email, password, origin });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${origin}/auth/callback`,
+      },
+    });
 
-      if (error) {
-        console.log(`Error: ${error.message}`);
-        return redirect("/login?message=Could not authenticate user");
-      }
-
-      return redirect("/login?message=Check email to continue sign in process");
-    } catch (error) {
-      console.error(error);
+    if (error) {
+      console.log(`Error: ${error.message}`);
       return redirect("/login?message=Could not authenticate user");
     }
+
+    return redirect("/login?message=Check email to continue sign in process");
+    // } catch (error) {
+    //   console.error(error);
+    //   return redirect("/login?message=Could not authenticate user");
+    // }
   };
 
   return (

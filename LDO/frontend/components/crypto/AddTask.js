@@ -2,12 +2,13 @@ import React, { useState } from "react";
 
 function AddTask({ contract }) {
   const [title, setTitle] = useState("");
+  const [reward, setReward] = useState(10);
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const tx = await contract.addTask(title, description);
+      const tx = await contract.addTask(title, description, reward);
       await tx.wait(); // 等待交易被挖掘
       alert("Task added successfully!");
     } catch (error) {
@@ -38,6 +39,18 @@ function AddTask({ contract }) {
       </div>
       <div>
         <label className="block text-sm font-medium text-gray-700">
+          Reward:
+          <input
+            type="text"
+            value={reward}
+            onChange={(e) => setReward(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </label>
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700">
           Description:
           <textarea
             value={description}
@@ -47,6 +60,7 @@ function AddTask({ contract }) {
           />
         </label>
       </div>
+
       <button
         type="submit"
         className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
