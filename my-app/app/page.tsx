@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/Header";
+import { Dapp } from "@/components/crypto/Dapp";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -27,7 +28,7 @@ export default async function Index() {
           {isSupabaseConnected && <AuthButton />}
         </div>
       </nav>
-
+      <Dapp />
       <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
         <p>
           Powered by{" "}
