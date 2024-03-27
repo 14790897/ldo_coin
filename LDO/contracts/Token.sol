@@ -89,34 +89,54 @@ contract Token {
 
     uint256 private taskIdCounter = 0;
 
-    // The Transfer event helps off-chain aplications understand
-    // what happens within your contract.
-    event TaskAdded(address indexed user, uint256 taskId, string title);
-    event TaskCompleted(address indexed user, uint256 taskId);
+    // 更新TaskAdded事件以包含所有任务信息
+    event TaskAdded(
+        address indexed userAddress,
+        uint256 taskId,
+        string title,
+        string description,
+        uint256 reward
+    );
+    event TaskCompleted(address indexed userAddress, uint256 taskId);
 
-    function addTask(string memory title, string memory description) public {
-        // 创建一个新的任务
-        Task memory newTask = Task(title, description, 1, false, taskIdCounter);
-        // 将任务添加到调用者的任务列表中
-
+    // 修改addTask函数以允许传入奖励金额
+    function addTask(
+        string memory title,
+        string memory description,
+        uint256 reward
+    ) public {
+        uint256 newTaskId = taskIdCounter;
+        Task memory newTask = Task(
+            title,
+            description,
+            reward,
+            false,
+            newTaskId
+        );
         userTasks[msg.sender].push(newTask);
+
+        // 更新taskIdCounter
         taskIdCounter++;
-        // Notify off-chain applications of the transfer.
-        emit TaskAdded(msg.sender, taskIdCounter, title);
+
+        // 通知任务已添加
+        emit TaskAdded(msg.sender, newTaskId, title, description, reward);
     }
 
     function completeTask(uint256 taskId) public {
-        // 确保任务存在
+        // 确保任务存在并未完成
         require(taskId < userTasks[msg.sender].length, "Task does not exist");
-        // 确保任务未完成
         require(
             !userTasks[msg.sender][taskId].completed,
             "Task already completed"
         );
+
         // 将任务标记为已完成
         userTasks[msg.sender][taskId].completed = true;
+
         // 奖励调用者
         balances[msg.sender] += userTasks[msg.sender][taskId].reward;
+
+        // 通知任务完成
         emit TaskCompleted(msg.sender, taskId);
     }
 }

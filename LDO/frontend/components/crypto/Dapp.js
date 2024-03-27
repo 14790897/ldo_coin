@@ -20,6 +20,9 @@ import { TransactionErrorMessage } from "./TransactionErrorMessage";
 import { WaitingForTransactionMessage } from "./WaitingForTransactionMessage";
 import { NoTokensMessage } from "./NoTokensMessage";
 import AddTask from "./AddTask";
+//supabase
+import { createClient } from "@/utils/supabase/client";
+const supabase = createClient();
 
 // This is the default id used by the Hardhat Network
 const HARDHAT_NETWORK_ID = "31337";
@@ -246,22 +249,52 @@ export default class Dapp extends React.Component {
       );
       // 在这里根据事件更新UI或状态
     });
-    this._token.on("TaskAdded", (user, taskId, title, event) => {
-      console.log(
-        `Task added by ${user} with taskId ${taskId.toString()} and title "${title}"`
-      );
-      // 在这里根据事件更新UI或状态,例如:
-      // - 将新任务添加到任务列表
-      // - 更新用户的任务计数
-      // - 显示通知或更新任务面板
-    });
 
-    this._token.on("TaskCompleted", (user, taskId, event) => {
-      console.log(`Task completed by ${user} with taskId ${taskId.toString()}`);
-      // 在这里根据事件更新UI或状态,例如:
-      // - 将完成的任务标记为已完成
-      // - 更新用户的完成任务计数
-      // - 显示通知或更新任务面板
+    this._token.on(
+      "TaskAdded",
+      async (userAddress, taskId, title, description, reward) => {
+        // 将新任务添加到Supabase
+        const { data, error } = await supabase.from("tasks").insert([
+          {
+            userAddress: userAddress,
+            taskId: taskId,
+            title: title,
+            description: description,
+            reward: reward,
+            completed: false,
+          },
+        ]);
+
+        if (error) {
+          console.error("Error adding task to Supabase:", error);
+        } else {
+          console.log(
+            `Task added by ${userAddress} with taskId ${taskId.toString()} and title "${title}"`
+          );
+          console.log("Task successfully added to Supabase:", data);
+        }
+      }
+    );
+    this._token.on("TaskCompleted", async (userAddress, taskId) => {
+      console.log(
+        `Task completed by ${userAddress} with taskId ${taskId.toString()}`
+      );
+
+      // 在Supabase中将任务标记为已完成
+      const { data, error } = await supabase
+        .from("tasks")
+        .update({ completed: true })
+        .match({ userAddress: userAddress, taskId: taskId });
+
+      if (error) {
+        console.error("Error marking task as completed in Supabase:", error);
+      } else {
+        console.log(
+          `Task completed by ${userAddress} with taskId ${taskId.toString()}`
+        );
+
+        console.log("Task successfully marked as completed in Supabase:", data);
+      }
     });
   }
 

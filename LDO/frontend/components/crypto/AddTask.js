@@ -6,46 +6,53 @@ function AddTask({ contract }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // 调用智能合约的addTask方法
     try {
       const tx = await contract.addTask(title, description);
       await tx.wait(); // 等待交易被挖掘
       alert("Task added successfully!");
-      // 可能需要刷新任务列表等
     } catch (error) {
       console.error("Failed to add task:", error);
       alert(
-        "Failed to add task. error: " + error.message ||
-          error.reason ||
-          error.toString()
+        "Failed to add task. error: " +
+          (error.message || error.reason || error.toString())
       );
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl mx-auto p-4 space-y-4 bg-white shadow-md rounded-lg"
+    >
       <div>
-        <label>
+        <label className="block text-sm font-medium text-gray-700">
           Title:
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </label>
       </div>
       <div>
-        <label>
+        <label className="block text-sm font-medium text-gray-700">
           Description:
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </label>
       </div>
-      <button type="submit">Add Task</button>
+      <button
+        type="submit"
+        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Add Task
+      </button>
     </form>
   );
 }
