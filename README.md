@@ -34,6 +34,11 @@ Open [http://localhost:3000/](http://localhost:3000/) to see your Dapp. You will
 need to have [Coinbase Wallet](https://www.coinbase.com/wallet) or [Metamask](https://metamask.io) installed and listening to
 `localhost 8545`.
 
+### meta mask 添加本地测试链
+
+http://127.0.0.1:8545
+链 ID: 31337
+
 ### 获得所有测试账户
 
 #### 进入控制台

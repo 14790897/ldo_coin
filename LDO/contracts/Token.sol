@@ -87,7 +87,7 @@ contract Token {
     // 定义一个映射来存储每个用户的悬赏任务
     mapping(address => Task[]) public userTasks;
 
-    uint256 private taskIdCounter = 0;
+    uint256 public taskIdCounter = 0;
 
     // 更新TaskAdded事件以包含所有任务信息
     event TaskAdded(
@@ -99,7 +99,6 @@ contract Token {
     );
     event TaskCompleted(address indexed userAddress, uint256 taskId);
 
-    // 修改addTask函数以允许传入奖励金额
     function addTask(
         string memory title,
         string memory description,

@@ -23,6 +23,7 @@ import AddTask from "./AddTask";
 //supabase
 import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
+import { addTaskToSupabase } from "@/utils/supabase/supabaseutils";
 
 // This is the default id used by the Hardhat Network
 const HARDHAT_NETWORK_ID = "31337";
@@ -166,7 +167,10 @@ export default class Dapp extends React.Component {
                   }
                   tokenSymbol={this.state.tokenData.symbol}
                 />
-                <AddTask contract={this._token} />
+                <AddTask
+                  contract={this._token}
+                  userAddress={this.state.selectedAddress}
+                />
               </div>
             )}
           </div>
@@ -250,52 +254,18 @@ export default class Dapp extends React.Component {
       // 在这里根据事件更新UI或状态
     });
 
-    this._token.on(
-      "TaskAdded",
-      async (userAddress, taskId, title, description, reward) => {
-        // 将新任务添加到Supabase
-        const { data, error } = await supabase.from("tasks").insert([
-          {
-            userAddress: userAddress,
-            taskId: taskId,
-            title: title,
-            description: description,
-            reward: reward,
-            completed: false,
-          },
-        ]);
-
-        if (error) {
-          console.error("Error adding task to Supabase:", error);
-        } else {
-          console.log(
-            `Task added by ${userAddress} with taskId ${taskId.toString()} and title "${title}"`
-          );
-          console.log("Task successfully added to Supabase:", data);
-        }
-      }
-    );
-    this._token.on("TaskCompleted", async (userAddress, taskId) => {
-      console.log(
-        `Task completed by ${userAddress} with taskId ${taskId.toString()}`
-      );
-
-      // 在Supabase中将任务标记为已完成
-      const { data, error } = await supabase
-        .from("tasks")
-        .update({ completed: true })
-        .match({ userAddress: userAddress, taskId: taskId });
-
-      if (error) {
-        console.error("Error marking task as completed in Supabase:", error);
-      } else {
-        console.log(
-          `Task completed by ${userAddress} with taskId ${taskId.toString()}`
-        );
-
-        console.log("Task successfully marked as completed in Supabase:", data);
-      }
-    });
+    // this._token.on(
+    //   "TaskAdded",
+    //   async (userAddress, taskId, title, description, reward) => {
+    //     await addTaskToSupabase(
+    //       userAddress,
+    //       taskId,
+    //       title,
+    //       description,
+    //       reward
+    //     );
+    //   }
+    // );
   }
 
   // The next two methods are needed to start and stop polling data. While

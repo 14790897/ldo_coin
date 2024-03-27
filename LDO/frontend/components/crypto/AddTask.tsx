@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-function AddTask({ contract }) {
+import { addTaskToSupabase } from "@/utils/supabase/supabaseutils";
+function AddTask({ contract, userAddress }) {
   const [title, setTitle] = useState("");
   const [reward, setReward] = useState(10);
   const [description, setDescription] = useState("");
@@ -10,6 +10,14 @@ function AddTask({ contract }) {
     try {
       const tx = await contract.addTask(title, description, reward);
       await tx.wait(); // 等待交易被挖掘
+      const taskId = await contract.taskIdCounter();
+      await addTaskToSupabase(
+        userAddress,
+        taskId.toString(),
+        title,
+        description,
+        reward
+      ); // 添加任务到Supabase
       alert("Task added successfully!");
     } catch (error) {
       console.error("Failed to add task:", error);
