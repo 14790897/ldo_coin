@@ -162,7 +162,7 @@ export class Dapp extends React.Component {
                   }
                   tokenSymbol={this.state.tokenData.symbol}
                 />
-                <AddTask contract={this.contract} />
+                <AddTask contract={this._token} />
               </div>
             )}
           </div>
@@ -244,6 +244,23 @@ export class Dapp extends React.Component {
         `Transfer from ${from} to ${to} of value ${value.toString()}`
       );
       // 在这里根据事件更新UI或状态
+    });
+    this._token.on("TaskAdded", (user, taskId, title, event) => {
+      console.log(
+        `Task added by ${user} with taskId ${taskId.toString()} and title "${title}"`
+      );
+      // 在这里根据事件更新UI或状态,例如:
+      // - 将新任务添加到任务列表
+      // - 更新用户的任务计数
+      // - 显示通知或更新任务面板
+    });
+
+    this._token.on("TaskCompleted", (user, taskId, event) => {
+      console.log(`Task completed by ${user} with taskId ${taskId.toString()}`);
+      // 在这里根据事件更新UI或状态,例如:
+      // - 将完成的任务标记为已完成
+      // - 更新用户的完成任务计数
+      // - 显示通知或更新任务面板
     });
   }
 

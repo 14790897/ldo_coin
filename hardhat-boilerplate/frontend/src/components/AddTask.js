@@ -14,7 +14,11 @@ function AddTask({ contract }) {
       // 可能需要刷新任务列表等
     } catch (error) {
       console.error("Failed to add task:", error);
-      alert("Failed to add task.");
+      alert(
+        "Failed to add task. error: " + error.message ||
+          error.reason ||
+          error.toString()
+      );
     }
   };
 
