@@ -1,0 +1,2 @@
+const accounts = await ethers.getSigners();
+console.log("Accounts:", accounts.map(account => account.address));

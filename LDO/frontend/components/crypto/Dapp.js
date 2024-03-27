@@ -37,7 +37,7 @@ const ERROR_CODE_TX_REJECTED_BY_USER = 4001;
 // Note that (3) and (4) are specific of this sample application, but they show
 // you how to keep your Dapp and contract's state in sync,  and how to send a
 // transaction.
-export class Dapp extends React.Component {
+export default class Dapp extends React.Component {
   constructor(props) {
     super(props);
 

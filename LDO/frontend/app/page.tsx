@@ -4,7 +4,14 @@ import { createClient } from "@/utils/supabase/server";
 import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
 import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
 import Header from "@/components/Header";
-import { Dapp } from "@/components/crypto/Dapp";
+import LoadingIndicator from "@/components/LoadingIndicator"; // 确保路径正确
+
+// import { Dapp } from "@/components/crypto/Dapp";
+import dynamic from "next/dynamic";
+const Dapp = dynamic(() => import("@/components/crypto/Dapp"), {
+  ssr: false,
+  loading: () => <LoadingIndicator />,
+});
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
