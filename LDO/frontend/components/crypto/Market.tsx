@@ -1,10 +1,13 @@
 "use client";
 // Market.tsx
 import React, { useEffect, useState } from "react";
-import { getTasksFromSupabase } from "@/utils/supabase/supabaseutils";
+import {
+  getTasksFromSupabase,
+  completeTaskInSupabase,
+} from "@/utils/supabase/supabaseutils";
 import { Task } from "@/types/all"; // 更新这个路径以指向你的Task接口
 
-const Market: React.FC = ({ contract }) => {
+const Market: React.FC = ({ contract, userAddress }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -37,7 +40,9 @@ const Market: React.FC = ({ contract }) => {
           `Task ${task.task_id} completed because the post is newer than the task creation.`
         );
         // 这里更新任务状态为完成
-        contract.completeTask(task.task_id);
+        const tx = await contract.completeTask(task.task_id);
+        await tx.wait(); // 等待交易被挖掘
+        await completeTaskInSupabase(userAddress, task.task_id); // 更新任务状态为完成
       } else {
         console.log(
           `Task ${task.task_id} not completed because the post is older than the task creation.`

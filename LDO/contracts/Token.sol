@@ -131,7 +131,7 @@ contract Token {
 
     function completeTask(uint256 taskId) public {
         // 确保任务存在并未完成
-        require(taskId < userTasks[msg.sender].length, "Task does not exist");
+        // require(taskId < userTasks[msg.sender].length, "Task does not exist");
         require(
             !userTasks[msg.sender][taskId].completed,
             "Task already completed"

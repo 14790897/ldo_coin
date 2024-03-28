@@ -71,25 +71,27 @@ export async function getTasksFromSupabase() {
     return { success: false, error: err };
   }
 }
+export async function completeTaskInSupabase(
+  userAddress: string,
+  taskId: number
+) {
+  console.log(
+    `Task completed by ${userAddress} with taskId ${taskId.toString()}`
+  );
 
-// this._token.on("TaskCompleted", async (userAddress, taskId) => {
-//   console.log(
-//     `Task completed by ${userAddress} with taskId ${taskId.toString()}`
-//   );
+  // 在Supabase中将任务标记为已完成
+  const { data, error } = await supabase
+    .from("tasks")
+    .update({ completed: true })
+    .match({ userAddress: userAddress, taskId: taskId });
 
-//   // 在Supabase中将任务标记为已完成
-//   const { data, error } = await supabase
-//     .from("tasks")
-//     .update({ completed: true })
-//     .match({ userAddress: userAddress, taskId: taskId });
+  if (error) {
+    console.error("Error marking task as completed in Supabase:", error);
+  } else {
+    console.log(
+      `Task completed by ${userAddress} with taskId ${taskId.toString()}`
+    );
 
-//   if (error) {
-//     console.error("Error marking task as completed in Supabase:", error);
-//   } else {
-//     console.log(
-//       `Task completed by ${userAddress} with taskId ${taskId.toString()}`
-//     );
-
-//     console.log("Task successfully marked as completed in Supabase:", data);
-//   }
-// });
+    console.log("Task successfully marked as completed in Supabase:", data);
+  }
+}

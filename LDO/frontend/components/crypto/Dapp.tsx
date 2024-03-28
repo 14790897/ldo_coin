@@ -178,7 +178,10 @@ export default class Dapp extends React.Component {
                   contract={this._token}
                   userAddress={this.state.selectedAddress}
                 />
-                <Market contract={this._token} />
+                <Market
+                  contract={this._token}
+                  userAddress={this.state.selectedAddress}
+                />
               </div>
             )}
           </div>
