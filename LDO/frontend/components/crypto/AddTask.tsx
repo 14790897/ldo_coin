@@ -8,6 +8,11 @@ function AddTask({ contract, userAddress }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      //如果description不符合链接格式，返回错误
+      if (!description.match(/https?:\/\/.*\..*/)) {
+        alert("Description must be a URL.");
+        return;
+      }
       const tx = await contract.addTask(title, description, reward);
       await tx.wait(); // 等待交易被挖掘
       const taskId = await contract.taskIdCounter();
