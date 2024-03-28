@@ -21,12 +21,17 @@ const Market: React.FC = ({ contract }) => {
   }, []);
 
   const checkAndCompleteTask = async (task: Task) => {
-    const postDetails = await fetch(`./${task.description}.rss`); // 获取帖子详情
+    const response = await fetch(`./topic?rss=${task.description}.rss`); // 获取帖子详情
+    const postDetails = await response.json();
 
     if (postDetails) {
       const taskCreatedAt = new Date(task.created_at);
-      const postPublishedAt = new Date(postDetails.pubDate);
+      const postPublishedAt = new Date(postDetails[0].pubDate);
+      const postLastPublished = postDetails[0];
 
+      // console.log("postdetails", postDetails);
+      console.log("taskCreatedAt", taskCreatedAt);
+      console.log("postPublishedAt", postLastPublished, postPublishedAt);
       if (postPublishedAt > taskCreatedAt) {
         console.log(
           `Task ${task.task_id} completed because the post is newer than the task creation.`
