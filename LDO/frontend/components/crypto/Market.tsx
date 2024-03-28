@@ -24,32 +24,37 @@ const Market: React.FC = ({ contract, userAddress }) => {
   }, []);
 
   const checkAndCompleteTask = async (task: Task) => {
-    const response = await fetch(`./topic?rss=${task.description}.rss`); // 获取帖子详情
-    const postDetails = await response.json();
+    try {
+      const response = await fetch(`./topic?rss=${task.description}.rss`); // 获取帖子详情
+      const postDetails = await response.json();
 
-    if (postDetails) {
-      const taskCreatedAt = new Date(task.created_at);
-      const postPublishedAt = new Date(postDetails[0].pubDate);
-      const postLastPublished = postDetails[0];
+      if (postDetails) {
+        const taskCreatedAt = new Date(task.created_at);
+        const postPublishedAt = new Date(postDetails[0].pubDate);
+        const postLastPublished = postDetails[0];
 
-      // console.log("postdetails", postDetails);
-      console.log("taskCreatedAt", taskCreatedAt);
-      console.log("postPublishedAt", postLastPublished, postPublishedAt);
-      if (postPublishedAt > taskCreatedAt) {
-        console.log(
-          `Task ${task.task_id} completed because the post is newer than the task creation.`
-        );
-        // 这里更新任务状态为完成
-        const tx = await contract.completeTask(task.task_id);
-        await tx.wait(); // 等待交易被挖掘
-        await completeTaskInSupabase(userAddress, task.task_id); // 更新任务状态为完成
+        // console.log("postdetails", postDetails);
+        console.log("taskCreatedAt", taskCreatedAt);
+        console.log("postPublishedAt", postLastPublished, postPublishedAt);
+        if (postPublishedAt > taskCreatedAt) {
+          console.log(
+            `Task ${task.task_id} completed because the post is newer than the task creation.`
+          );
+          // 这里更新任务状态为完成
+          const tx = await contract.completeTask(task.task_id - 1);
+          await tx.wait(); // 等待交易被挖掘
+          await completeTaskInSupabase(userAddress, task.task_id); // 更新任务状态为完成
+        } else {
+          console.log(
+            `Task ${task.task_id} not completed because the post is older than the task creation.`
+          );
+        }
       } else {
-        console.log(
-          `Task ${task.task_id} not completed because the post is older than the task creation.`
-        );
+        console.error(`Error fetching post details for task ${task.task_id}.`);
       }
-    } else {
-      console.error(`Error fetching post details for task ${task.task_id}.`);
+    } catch (error) {
+      console.error("Error checking and completing task:", error);
+      alert("An error occurred while checking and completing the task.");
     }
   };
 
