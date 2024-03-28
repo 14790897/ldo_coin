@@ -31,6 +31,7 @@ const TaskList: React.FC = () => {
           <h2 className="text-xl font-semibold">{task.title}</h2>
           <p className="text-gray-700">Description: {task.description}</p>
           <p className="text-gray-600">Reward: {task.reward}</p>
+          <p className="text-gray-600">Deadline: {task.created_at}</p>
           <p className="text-gray-500">
             Completed: {task.completed ? "Yes" : "No"}
           </p>

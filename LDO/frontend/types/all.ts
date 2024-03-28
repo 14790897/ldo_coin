@@ -5,4 +5,5 @@ export interface Task {
   description: string;
   reward: number;
   completed: boolean;
+  created_at: string;
 }

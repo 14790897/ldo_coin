@@ -16,7 +16,8 @@ function AddTask({ contract, userAddress }) {
         taskId.toString(),
         title,
         description,
-        reward
+        reward,
+        new Date()
       ); // 添加任务到Supabase
       alert("Task added successfully!");
     } catch (error) {

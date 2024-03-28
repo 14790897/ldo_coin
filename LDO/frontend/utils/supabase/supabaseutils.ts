@@ -15,7 +15,7 @@ export async function addTaskToSupabase(
   title: string,
   description: string,
   reward: number,
-  time
+  currentTime: Date // 增加一个表示当前时间的参数
 ) {
   try {
     console.log(
@@ -32,6 +32,7 @@ export async function addTaskToSupabase(
         description: description,
         reward: reward,
         completed: false,
+        created_at: currentTime.toISOString(), // 使用ISO字符串格式的当前时间
       },
     ]);
 
@@ -40,7 +41,7 @@ export async function addTaskToSupabase(
       return { success: false, error };
     } else {
       console.log(
-        `Task added by ${userAddress} with taskId ${taskId.toString()} and title "${title}"`
+        `Task added by ${userAddress} with taskId ${taskId.toString()} and title "${title}" and timestamp "${currentTime.toISOString()}"`
       );
       console.log("Task successfully added to Supabase:", data);
       return { success: true, data };
