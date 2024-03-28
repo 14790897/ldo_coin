@@ -9,16 +9,13 @@ export function ConnectWallet({ connectWallet, networkError, dismiss }) {
         <div className="col-12 text-center">
           {/* Wallet network should be set to Localhost:8545. */}
           {networkError && (
-            <NetworkErrorMessage 
-              message={networkError} 
-              dismiss={dismiss} 
-            />
+            <NetworkErrorMessage message={networkError} dismiss={dismiss} />
           )}
         </div>
         <div className="col-6 p-4 text-center">
           <p>Please connect to your wallet.</p>
           <button
-            className="btn btn-warning"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
             type="button"
             onClick={connectWallet}
           >
