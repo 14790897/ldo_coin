@@ -24,6 +24,8 @@ import AddTask from "./AddTask";
 import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
 import { addTaskToSupabase } from "@/utils/supabase/supabaseutils";
+//market
+import Market from "./Market";
 
 // This is the default id used by the Hardhat Network
 const HARDHAT_NETWORK_ID = "31337";
@@ -176,6 +178,7 @@ export default class Dapp extends React.Component {
                   contract={this._token}
                   userAddress={this.state.selectedAddress}
                 />
+                <Market contract={this._token} />
               </div>
             )}
           </div>

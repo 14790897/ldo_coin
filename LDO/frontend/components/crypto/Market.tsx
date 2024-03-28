@@ -1,10 +1,10 @@
 "use client";
-// TaskList.tsx
+// Market.tsx
 import React, { useEffect, useState } from "react";
 import { getTasksFromSupabase } from "@/utils/supabase/supabaseutils";
 import { Task } from "@/types/all"; // 更新这个路径以指向你的Task接口
 
-const TaskList: React.FC = () => {
+const Market: React.FC = ({ contract }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -19,6 +19,29 @@ const TaskList: React.FC = () => {
 
     fetchTasks();
   }, []);
+
+  const checkAndCompleteTask = async (task: Task) => {
+    const postDetails = await fetch(`./${task.description}.rss`); // 获取帖子详情
+
+    if (postDetails) {
+      const taskCreatedAt = new Date(task.created_at);
+      const postPublishedAt = new Date(postDetails.pubDate);
+
+      if (postPublishedAt > taskCreatedAt) {
+        console.log(
+          `Task ${task.task_id} completed because the post is newer than the task creation.`
+        );
+        // 这里更新任务状态为完成
+        contract.completeTask(task.task_id);
+      } else {
+        console.log(
+          `Task ${task.task_id} not completed because the post is older than the task creation.`
+        );
+      }
+    } else {
+      console.error(`Error fetching post details for task ${task.task_id}.`);
+    }
+  };
 
   return (
     <div>
@@ -35,10 +58,16 @@ const TaskList: React.FC = () => {
           <p className="text-gray-500">
             Completed: {task.completed ? "Yes" : "No"}
           </p>
+          <button
+            onClick={() => checkAndCompleteTask(task)}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          >
+            Mark as Completed
+          </button>
         </div>
       ))}
     </div>
   );
 };
 
-export default TaskList;
+export default Market;
