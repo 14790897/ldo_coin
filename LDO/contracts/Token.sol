@@ -104,6 +104,14 @@ contract Token {
         string memory description,
         uint256 reward
     ) public {
+        // 检查用户余额是否足够支付悬赏
+        require(
+            balances[msg.sender] >= reward,
+            "Not enough tokens to set as a reward"
+        );
+
+        // 从用户余额中扣除悬赏金额
+        balances[msg.sender] -= reward;
         uint256 newTaskId = taskIdCounter;
         Task memory newTask = Task(
             title,
