@@ -14,7 +14,8 @@ export async function addTaskToSupabase(
   taskId: number,
   title: string,
   description: string,
-  reward: number
+  reward: number,
+  time
 ) {
   try {
     console.log(
@@ -46,6 +47,26 @@ export async function addTaskToSupabase(
     }
   } catch (err) {
     console.error("Unexpected error adding task to Supabase:", err);
+    return { success: false, error: err };
+  }
+}
+
+export async function getTasksFromSupabase() {
+  try {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .order("task_id", { ascending: true });
+
+    if (error) {
+      console.error("Error fetching tasks from Supabase:", error);
+      return { success: false, error };
+    } else {
+      console.log("Tasks successfully fetched from Supabase:", data);
+      return { success: true, data };
+    }
+  } catch (err) {
+    console.error("Unexpected error fetching tasks from Supabase:", err);
     return { success: false, error: err };
   }
 }

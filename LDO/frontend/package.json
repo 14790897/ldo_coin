@@ -9,6 +9,7 @@
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",
+    "ethers": "^5.4.7",
     "geist": "^1.2.1",
     "next": "latest",
     "postcss": "8.4.33",
@@ -16,7 +17,7 @@
     "react-dom": "18.2.0",
     "tailwindcss": "3.4.1",
     "typescript": "5.3.3",
-    "ethers": "^5.4.7"
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {
     "@types/node": "20.11.5",
