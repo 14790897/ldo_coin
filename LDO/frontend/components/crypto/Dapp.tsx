@@ -63,6 +63,11 @@ export default class Dapp extends React.Component {
   }
 
   componentDidMount() {
+    const connectedWallet = localStorage.getItem("connectedWallet");
+    if (connectedWallet) {
+      this._checkNetwork();
+      this._initialize(connectedWallet);
+    }
     // this._token.on("Transfer", (from, to, value, event) => {
     //   console.log(
     //     `Transfer from ${from} to ${to} of value ${value.toString()}`
@@ -194,6 +199,9 @@ export default class Dapp extends React.Component {
     const [selectedAddress] = await window.ethereum.request({
       method: "eth_requestAccounts",
     });
+
+    // 将连接的钱包地址保存到 localStorage
+    localStorage.setItem("connectedWallet", selectedAddress);
 
     // Once we have the address, we can initialize the application.
 
@@ -384,6 +392,7 @@ export default class Dapp extends React.Component {
   // This method resets the state
   _resetState() {
     this.setState(this.initialState);
+    localStorage.removeItem("connectedWallet");
   }
 
   async _switchChain() {
