@@ -52,12 +52,18 @@ export async function addTaskToSupabase(
   }
 }
 
-export async function getTasksFromSupabase() {
+export async function getTasksFromSupabase(includeCompleted = false) {
   try {
-    const { data, error } = await supabase
+    let query = supabase
       .from("tasks")
       .select("*")
       .order("task_id", { ascending: true });
+
+    if (!includeCompleted) {
+      query = query.eq("is_completed", false);
+    }
+
+    const { data, error } = await query;
 
     if (error) {
       console.error("Error fetching tasks from Supabase:", error);
@@ -71,6 +77,7 @@ export async function getTasksFromSupabase() {
     return { success: false, error: err };
   }
 }
+
 export async function completeTaskInSupabase(
   userAddress: string,
   taskId: number
