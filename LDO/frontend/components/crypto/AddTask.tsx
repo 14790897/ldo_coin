@@ -24,7 +24,7 @@ function AddTask({ contract, userAddress }) {
         reward,
         new Date()
       ); // 添加任务到Supabase
-      alert("Task added successfully!");
+      // alert("Task added successfully!");
     } catch (error) {
       console.error("Failed to add task:", error);
       alert(

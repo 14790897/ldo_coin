@@ -45,6 +45,16 @@ const Market: React.FC = ({ contract, userAddress }) => {
     // 根据payload的类型（INSERT, UPDATE, DELETE）来决定如何更新状态
     if (payload.eventType === "INSERT") {
       setTasks((prevTasks) => [...prevTasks, payload.new]);
+    } else if (payload.eventType === "UPDATE") {
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === payload.new.id ? payload.new : task
+        )
+      );
+    } else if (payload.eventType === "DELETE") {
+      setTasks((prevTasks) =>
+        prevTasks.filter((task) => task.id !== payload.old.id)
+      );
     }
   };
   const checkAndCompleteTask = async (task: Task) => {
