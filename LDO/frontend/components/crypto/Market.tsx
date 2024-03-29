@@ -6,6 +6,8 @@ import {
   completeTaskInSupabase,
 } from "@/utils/supabase/supabaseutils";
 import { Task } from "@/types/all"; // 更新这个路径以指向你的Task接口
+import { createClient } from "@/utils/supabase/client";
+const supabase = createClient();
 
 const Market: React.FC = ({ contract, userAddress }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -23,6 +25,28 @@ const Market: React.FC = ({ contract, userAddress }) => {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    // 订阅tasks表的变化
+    supabase
+      .channel("tasks")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "tasks" },
+        (payload) => {
+          console.log("Change received!", payload);
+          // 调用一个函数来处理这些变化
+          handleDataChange(payload);
+        }
+      )
+      .subscribe();
+  }, []);
+
+  const handleDataChange = (payload: any) => {
+    // 根据payload的类型（INSERT, UPDATE, DELETE）来决定如何更新状态
+    if (payload.eventType === "INSERT") {
+      setTasks((prevTasks) => [...prevTasks, payload.new]);
+    }
+  };
   const checkAndCompleteTask = async (task: Task) => {
     try {
       const response = await fetch(`./topic?rss=${task.description}.rss`); // 获取帖子详情

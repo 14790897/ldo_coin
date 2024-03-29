@@ -90,7 +90,7 @@ export async function completeTaskInSupabase(
   const { data, error } = await supabase
     .from("tasks")
     .update({ completed: true })
-    .match({ userAddress: userAddress, taskId: taskId });
+    .match({ user_address: userAddress, task_id: taskId });
 
   if (error) {
     console.error("Error marking task as completed in Supabase:", error);
