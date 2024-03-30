@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import {
   getTasksFromSupabase,
   completeTaskInSupabase,
+  getTotalTaskCount,
 } from "@/utils/supabase/supabaseutils";
 import { Task } from "@/types/all"; // 更新这个路径以指向你的Task接口
 import { createClient } from "@/utils/supabase/client";
@@ -13,6 +14,8 @@ const Market: React.FC = ({ contract, userAddress }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
   // 分页逻辑
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
   const tasksPerPage = 10; // 您可以根据需要调整每页显示的任务数量
 
   useEffect(() => {
@@ -30,8 +33,20 @@ const Market: React.FC = ({ contract, userAddress }) => {
 
     fetchTasks();
   }, [currentPage]); // 当 currentPage 改变时，重新获取数据
+  //获取总的页数
+  useEffect(() => {
+    const fetchTotalTaskCount = async () => {
+      const { success, count } = await getTotalTaskCount();
+      if (success) {
+        const totalPages = Math.ceil(count / tasksPerPage);
+        setTotalPages(totalPages);
+      } else {
+        console.error("Error fetching total task count.");
+      }
+    };
 
-  // 在这里计算当前页的任务
+    fetchTotalTaskCount();
+  }, []);
   // 添加用于更改页码的方法
   const goToNextPage = () => setCurrentPage((page) => page + 1);
   const goToPreviousPage = () =>
@@ -153,10 +168,16 @@ const Market: React.FC = ({ contract, userAddress }) => {
         >
           Previous
         </button>
-        <span className="mx-3">Page {currentPage}</span>
+        <span className="mx-3">
+          Page {currentPage} of {totalPages}
+        </span>
         <button
           onClick={goToNextPage}
-          className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline"
+          className={`bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline ${
+            currentPage === totalPages
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-blue-700"
+          }`}
         >
           Next
         </button>
