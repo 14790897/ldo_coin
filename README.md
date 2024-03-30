@@ -38,6 +38,7 @@ need to have [Coinbase Wallet](https://www.coinbase.com/wallet) or [Metamask](ht
 
 http://127.0.0.1:8545
 链 ID: 31337
+![alt text](image.png)
 
 ### 获得所有测试账户
 
