@@ -4,6 +4,7 @@ function AddTask({ contract, userAddress }) {
   const [title, setTitle] = useState("");
   const [reward, setReward] = useState(10);
   const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -13,7 +14,7 @@ function AddTask({ contract, userAddress }) {
         alert("Description must be a URL.");
         return;
       }
-      const tx = await contract.addTask(title, description, reward);
+      const tx = await contract.addTask(title, description, reward, quantity);
       await tx.wait(); // 等待交易被挖掘
       const taskId = await contract.taskIdCounter();
       await addTaskToSupabase(
@@ -22,7 +23,8 @@ function AddTask({ contract, userAddress }) {
         title,
         description,
         reward,
-        new Date()
+        new Date(),
+        quantity
       ); // 添加任务到Supabase
       // alert("Task added successfully!");
     } catch (error) {
@@ -58,6 +60,16 @@ function AddTask({ contract, userAddress }) {
             type="text"
             value={reward}
             onChange={(e) => setReward(e.target.value)}
+            required
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </label>
+        <label className="block text-sm font-medium text-gray-700">
+          Quantity:
+          <input
+            type="text"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />

@@ -1,25 +1,18 @@
 import { createClient } from "@/utils/supabase/client";
 const supabase = createClient();
 
-interface AddTaskParams {
-  userAddress: string;
-  taskId: number;
-  title: string;
-  description: string;
-  reward: number;
-}
-
 export async function addTaskToSupabase(
   userAddress: string,
   taskId: number,
   title: string,
   description: string,
   reward: number,
-  currentTime: Date // 增加一个表示当前时间的参数
+  currentTime: Date,
+  quantity: number
 ) {
   try {
     console.log(
-      `Task added by ${userAddress}, taskId: ${taskId}, title: ${title}, description: ${description}, reward: ${reward}`
+      `Task added by ${userAddress}, taskId: ${taskId}, title: ${title}, description: ${description}, reward: ${reward},quantity: ${quantity}`
     );
     if (!userAddress || !taskId || !title || !description || !reward) {
       return { success: false, error: "Invalid parameters" };
@@ -33,6 +26,7 @@ export async function addTaskToSupabase(
         reward: reward,
         completed: false,
         created_at: currentTime.toISOString(), // 使用ISO字符串格式的当前时间
+        quantity: quantity,
       },
     ]);
 

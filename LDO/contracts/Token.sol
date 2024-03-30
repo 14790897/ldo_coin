@@ -82,6 +82,7 @@ contract Token {
         uint256 reward;
         bool completed;
         uint256 id;
+        uint256 quantity;
     }
 
     // 定义一个映射来存储每个用户的悬赏任务
@@ -95,14 +96,16 @@ contract Token {
         uint256 taskId,
         string title,
         string description,
-        uint256 reward
+        uint256 reward,
+        uint256 quantity
     );
     event TaskCompleted(address indexed userAddress, uint256 taskId);
 
     function addTask(
         string memory title,
         string memory description,
-        uint256 reward
+        uint256 reward,
+        uint256 quantity
     ) public {
         // 检查用户余额是否足够支付悬赏
         require(
@@ -118,7 +121,8 @@ contract Token {
             description,
             reward,
             false,
-            newTaskId
+            newTaskId,
+            quantity
         );
         userTasks[msg.sender].push(newTask);
 
@@ -126,7 +130,14 @@ contract Token {
         taskIdCounter++;
 
         // 通知任务已添加
-        emit TaskAdded(msg.sender, newTaskId, title, description, reward);
+        emit TaskAdded(
+            msg.sender,
+            newTaskId,
+            title,
+            description,
+            reward,
+            quantity
+        );
     }
 
     function completeTask(uint256 taskId) public {

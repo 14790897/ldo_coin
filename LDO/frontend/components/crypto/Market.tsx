@@ -59,22 +59,24 @@ const Market: React.FC = ({ contract, userAddress }) => {
   };
   const checkAndCompleteTask = async (task: Task) => {
     try {
-      const response = await fetch(`./topic?rss=${task.description}.rss`); // 获取帖子详情
+      const response = await fetch(
+        `./topic?rss=${task.description}.rss&quantity=${task.quantity}`
+      ); // 获取帖子详情
       const postDetails = await response.json();
 
       if (postDetails) {
+        const index = postDetails.length - 1;
         const taskCreatedAt = new Date(task.created_at);
-        const postPublishedAt = new Date(postDetails[0].pubDate);
-        const postLastPublished = postDetails[0];
+        const postPublishedAt = new Date(postDetails[index].pubDate);
+        const postLastPublished = postDetails[index];
 
-        // console.log("postdetails", postDetails);
         console.log("taskCreatedAt", taskCreatedAt);
         console.log("postPublishedAt", postLastPublished, postPublishedAt);
         if (postPublishedAt > taskCreatedAt) {
           console.log(
             `Task ${task.task_id} completed because the post is newer than the task creation.`
           );
-          // 这里更新任务状态为完成
+          // 这里更新任务状态为完成,todo 为什么要减一才行
           const tx = await contract.completeTask(task.task_id - 1);
           await tx.wait(); // 等待交易被挖掘
           await completeTaskInSupabase(userAddress, task.task_id); // 更新任务状态为完成
@@ -103,6 +105,7 @@ const Market: React.FC = ({ contract, userAddress }) => {
           <h2 className="text-xl font-semibold">{task.title}</h2>
           <p className="text-gray-700">Description: {task.description}</p>
           <p className="text-gray-600">Reward: {task.reward}</p>
+          <p className="text-gray-600">Quantity: {task.quantity}</p>
           <p className="text-gray-600">Deadline: {task.created_at}</p>
           <p className="text-gray-500">
             Completed: {task.completed ? "Yes" : "No"}

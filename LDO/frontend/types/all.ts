@@ -6,4 +6,5 @@ export interface Task {
   reward: number;
   completed: boolean;
   created_at: string;
+  quantity: number;
 }

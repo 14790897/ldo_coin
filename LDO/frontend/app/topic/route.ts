@@ -6,11 +6,12 @@ export async function GET(request: Request) {
   // 从URL中获取RSS源
   const requestUrl = new URL(request.url);
   const rssUrl = requestUrl.searchParams.get("rss");
+  const quantity = requestUrl.searchParams.get("quantity");
 
-  if (!rssUrl) {
+  if (!rssUrl || !quantity) {
     return new Response(
       JSON.stringify({
-        message: "Missing 'rss' query parameter",
+        message: "Missing 'rss' or 'quantity' query parameter",
       }),
       {
         status: 400, // 或其他适当的错误状态码
@@ -26,23 +27,15 @@ export async function GET(request: Request) {
   const rssString = await response.text();
   console.log("rssString:", rssString);
   // 解析RSS源
-  const recentReplies = parseRSS(rssString);
+  const recentReplies = parseRSS(rssString, quantity);
   console.log("recentReplies:", recentReplies);
 
-  // 返回最新的十个回答
-  // return new Response(
-  //   JSON.stringify({
-  //     message: recentReplies,
-  //   }),
-  //   {
-  //     status: 200,
-  //   }
-  // );
+  // 返回最新的counts个回答
   return NextResponse.json(recentReplies);
 }
 
 // 解析XML字符串
-const parseRSS = (xmlString: string) => {
+const parseRSS = (xmlString: string, quantity: string) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(xmlString, "text/xml");
   const items = doc.getElementsByTagName("item");
@@ -62,9 +55,9 @@ const parseRSS = (xmlString: string) => {
     }
   }
 
-  // 按发布日期排序
+  // 按发布日期排序，时间新的在前
   results.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   // 返回最新的十个回答
-  return results.slice(0, 10);
+  return results.slice(0, Number(quantity));
 };
