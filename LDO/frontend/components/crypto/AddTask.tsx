@@ -14,6 +14,16 @@ function AddTask({ contract, userAddress }) {
         alert("Description must be a URL.");
         return;
       }
+      const response = await fetch(
+        `./topic?rss=${description}.rss&quantity=${quantity}`
+      ); // 获取帖子详情
+      const postDetails = await response.json();
+
+      if (
+        !(postDetails && Array.isArray(postDetails) && postDetails.length > 0)
+      ) {
+        alert("Failed to fetch post details.注意精华神贴无法访问,无法作为任务");
+      }
       const tx = await contract.addTask(title, description, reward, quantity);
       await tx.wait(); // 等待交易被挖掘
       const taskId = await contract.taskIdCounter();
