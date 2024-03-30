@@ -64,7 +64,7 @@ const Market: React.FC = ({ contract, userAddress }) => {
       ); // 获取帖子详情
       const postDetails = await response.json();
 
-      if (postDetails) {
+      if (postDetails && Array.isArray(postDetails) && postDetails.length > 0) {
         const index = postDetails.length - 1;
         const taskCreatedAt = new Date(task.created_at);
         const postPublishedAt = new Date(postDetails[index].pubDate);
@@ -86,7 +86,9 @@ const Market: React.FC = ({ contract, userAddress }) => {
           );
         }
       } else {
-        console.error(`Error fetching post details for task ${task.task_id}.`);
+        throw new Error(
+          `注意精华神贴无法访问，Error fetching post details for task ${task.task_id}.`
+        );
       }
     } catch (error) {
       console.error("Error checking and completing task:", error);
