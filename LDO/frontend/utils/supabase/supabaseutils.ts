@@ -46,11 +46,18 @@ export async function addTaskToSupabase(
   }
 }
 
-export async function getTasksFromSupabase(includeCompleted = false) {
+export async function getTasksFromSupabase(
+  page = 1,
+  limit = 10,
+  includeCompleted = false
+) {
+  const offset = (page - 1) * limit;
+
   try {
     let query = supabase
       .from("tasks")
       .select("*")
+      .range(offset, offset + limit - 1)
       .order("task_id", { ascending: true });
 
     if (!includeCompleted) {
