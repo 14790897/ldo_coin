@@ -35,7 +35,7 @@ task("faucet", "Sends ETH and tokens to an address")
 
     const tx = await token.transfer(receiver, 100);
     await tx.wait();
-
+    //这里发送了1个eth，注意所有交易的gas费用由eth结算
     const tx2 = await sender.sendTransaction({
       to: receiver,
       value: ethers.constants.WeiPerEther,

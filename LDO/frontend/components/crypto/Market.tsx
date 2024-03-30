@@ -31,7 +31,7 @@ const Market: React.FC = ({ contract, userAddress }) => {
       .channel("tasks")
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "public", table: "tasks" },
+        { event: "*", schema: "public", table: "tasks" },
         (payload) => {
           console.log("Change received!", payload);
           // 调用一个函数来处理这些变化
