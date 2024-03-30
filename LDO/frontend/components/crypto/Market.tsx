@@ -156,7 +156,7 @@ const Market: React.FC = ({ contract, userAddress }) => {
           ))}
       </div>
       {/* 分页控制 */}
-      <div>
+      <div className="flex justify-center items-center">
         <button
           onClick={goToPreviousPage}
           disabled={currentPage === 1}
