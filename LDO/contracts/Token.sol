@@ -10,8 +10,8 @@ import "hardhat/console.sol";
 // This is the main building block for smart contracts.
 contract Token {
     // Some string type variables to identify the token.
-    string public name = "My Hardhat Token";
-    string public symbol = "MHT";
+    string public name = "LinuxDo Token";
+    string public symbol = "LDO";
 
     // The fixed amount of tokens stored in an unsigned integer type variable.
     uint256 public totalSupply = 1000000;
@@ -145,5 +145,24 @@ contract Token {
 
         // 通知任务完成
         emit TaskCompleted(msg.sender, taskId);
+    }
+
+    /**
+     * 空投函数，允许合约所有者向一组用户发送代币。
+     * @param _to 接收空投的地址数组。
+     * @param _amount 每个地址接收的代币数量。
+     */
+    function airdrop(address[] memory _to, uint256 _amount) public {
+        require(msg.sender == owner, "Only owner can execute airdrop");
+
+        for (uint i = 0; i < _to.length; i++) {
+            require(
+                balances[owner] >= _amount,
+                "Not enough tokens in owner's account"
+            );
+            balances[owner] -= _amount;
+            balances[_to[i]] += _amount;
+            emit Transfer(owner, _to[i], _amount);
+        }
     }
 }
