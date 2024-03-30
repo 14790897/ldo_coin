@@ -30,6 +30,12 @@ pnpm install
 pnpm dev
 ```
 
+Last but not least, you can gain some test token:
+
+```sh
+npx hardhat --network localhost faucet  <your-metamask-address>
+```
+
 Open [http://localhost:3000/](http://localhost:3000/) to see your Dapp. You will
 need to have [Coinbase Wallet](https://www.coinbase.com/wallet) or [Metamask](https://metamask.io) installed and listening to
 `localhost 8545`.

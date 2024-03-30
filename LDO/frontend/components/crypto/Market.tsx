@@ -106,7 +106,7 @@ const Market: React.FC = ({ contract, userAddress }) => {
           <p className="text-gray-700">Description: {task.description}</p>
           <p className="text-gray-600">Reward: {task.reward}</p>
           <p className="text-gray-600">Quantity: {task.quantity}</p>
-          <p className="text-gray-600">Deadline: {task.created_at}</p>
+          <p className="text-gray-600">CreateTime: {task.created_at}</p>
           <p className="text-gray-500">
             Completed: {task.completed ? "Yes" : "No"}
           </p>

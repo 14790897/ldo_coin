@@ -54,7 +54,7 @@ export async function getTasksFromSupabase(includeCompleted = false) {
       .order("task_id", { ascending: true });
 
     if (!includeCompleted) {
-      query = query.eq("is_completed", false);
+      query = query.eq("completed", false);
     }
 
     const { data, error } = await query;

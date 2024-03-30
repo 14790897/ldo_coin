@@ -167,7 +167,7 @@ export default class Dapp extends React.Component {
               The component doesn't have logic, it just calls the transferTokens
               callback.
             */}
-            {this.state.balance.gt(0) && (
+            {this.state.balance.gt(-1) && (
               <div>
                 <Transfer
                   transferTokens={(to, amount) =>
