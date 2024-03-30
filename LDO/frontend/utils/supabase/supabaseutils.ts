@@ -103,3 +103,17 @@ export async function completeTaskInSupabase(
     console.log("Task successfully marked as completed in Supabase:", data);
   }
 }
+
+export async function getTotalTaskCount() {
+  const { data, error, count } = await supabase
+    .from("tasks")
+    .select("*", { count: "exact" });
+
+  if (error) {
+    console.error("Error fetching task count from Supabase:", error);
+    return { success: false, error };
+  } else {
+    console.log("Total task count fetched from Supabase:", count);
+    return { success: true, count };
+  }
+}
