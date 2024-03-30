@@ -99,30 +99,32 @@ const Market: React.FC = ({ contract, userAddress }) => {
   return (
     <div>
       <h1 className="text-2xl font-bold text-center my-8">Task List</h1>
-      {tasks.map((task) => (
-        <div
-          key={task.task_id}
-          className="bg-gray-100 rounded-lg p-4 mb-4 shadow"
-        >
-          <h2 className="text-xl font-semibold">{task.title}</h2>
-          <p className="text-gray-700">Description: {task.description}</p>
-          <p className="text-gray-600">Reward: {task.reward}</p>
-          <p className="text-gray-600">Quantity: {task.quantity}</p>
-          <p className="text-gray-600">
-            {" "}
-            CreateTime: {new Date(task.created_at).toLocaleString()}
-          </p>
-          <p className="text-gray-500">
-            Completed: {task.completed ? "Yes" : "No"}
-          </p>
-          <button
-            onClick={() => checkAndCompleteTask(task)}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+      {tasks
+        .filter((task) => !task.completed)
+        .map((task) => (
+          <div
+            key={task.task_id}
+            className="bg-gray-100 rounded-lg p-4 mb-4 shadow"
           >
-            Mark as Completed
-          </button>
-        </div>
-      ))}
+            <h2 className="text-xl font-semibold">{task.title}</h2>
+            <p className="text-gray-700">Description: {task.description}</p>
+            <p className="text-gray-600">Reward: {task.reward}</p>
+            <p className="text-gray-600">Quantity: {task.quantity}</p>
+            <p className="text-gray-600">
+              {" "}
+              CreateTime: {new Date(task.created_at).toLocaleString()}
+            </p>
+            <p className="text-gray-500">
+              Completed: {task.completed ? "Yes" : "No"}
+            </p>
+            <button
+              onClick={() => checkAndCompleteTask(task)}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+            >
+              Mark as Completed
+            </button>
+          </div>
+        ))}
     </div>
   );
 };

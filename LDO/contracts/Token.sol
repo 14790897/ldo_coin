@@ -147,12 +147,15 @@ contract Token {
             !userTasks[msg.sender][taskId].completed,
             "Task already completed"
         );
+        console.log("Completing task with ID:", taskId); // 输出日志
 
         // 将任务标记为已完成
         userTasks[msg.sender][taskId].completed = true;
 
         // 奖励调用者
-        balances[msg.sender] += userTasks[msg.sender][taskId].reward;
+        uint256 reward = userTasks[msg.sender][taskId].reward;
+        balances[msg.sender] += reward;
+        console.log("Rewarded", reward, "tokens to", msg.sender); // 输出日志
 
         // 通知任务完成
         emit TaskCompleted(msg.sender, taskId);
