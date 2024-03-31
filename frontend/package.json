@@ -8,6 +8,7 @@
   "dependencies": {
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "latest",
+    "@types/xmldom": "^0.1.34",
     "autoprefixer": "10.4.17",
     "ethers": "^5.4.7",
     "geist": "^1.2.1",
