@@ -40,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 
 .env
-contract-address.json
-Token.json
+# contract-address.json
+# Token.json
