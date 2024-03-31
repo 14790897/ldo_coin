@@ -20,9 +20,7 @@ function AddTask({ contract, userAddress }: AddTaskProps) {
         return;
       }
       const response = await fetch(
-        `./topic?rss=${trimTrailingNumbersIfAny(
-          description
-        )}.rss&quantity=${quantity}`
+        `./topic?rss=${description}.rss&quantity=${quantity}`
       ); // 获取帖子详情
       const postDetails = await response.json();
 
@@ -97,7 +95,9 @@ function AddTask({ contract, userAddress }: AddTaskProps) {
           Description:
           <textarea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) =>
+              setDescription(trimTrailingNumbersIfAny(e.target.value))
+            }
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
