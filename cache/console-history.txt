@@ -1,0 +1,15 @@
+console.log("Accounts:", accounts.map(account => account.address));
+const accounts = await ethers.getSigners();
+console.log("Accounts:", accounts.map(account => account.address));
+const accounts = await ethers.getSigners();
+}
+for (c  console.log(await account.getAddress());
+const accounts = await ethers.getSigners();
+}
+  console.log(await account.getAddress());
+for (const account of accounts) {
+const accounts = await ethers.getSigners();
+}
+  console.log(account);
+for (const account of accounts) {
+const accounts = await ethers.provider.getAccountsconsole.log("Available accounts:");
