@@ -31,7 +31,7 @@ export default async function Index() {
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <DeployButton />
-          <Link href="/market">View Task List</Link>
+          {/* <Link href="/market">View Task List</Link> */}
           {/* {isSupabaseConnected && <AuthButton />} */}
         </div>
       </nav>
@@ -45,7 +45,7 @@ export default async function Index() {
             className="font-bold hover:underline"
             rel="noreferrer"
           >
-            ldo
+            LinuxDo Token
           </a>
         </p>
       </footer>
