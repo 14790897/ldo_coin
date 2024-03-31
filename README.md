@@ -1,3 +1,14 @@
+## 新手教程
+
+这个代币提供了一种增加论坛活跃度的方法，用户可以在平台上发布对于某个帖子的评论任务，设置此次任务的 LDO 代币奖励，别的用户可以通过评论完成任务，领取 LDO 代币奖励
+
+1. 在各大插件商店安装 meta mask，这个工具用于和区块链进行交互
+2. 前往 https://sepolia-faucet.pk910.de/ 挖一些 sepolia 以太坊代币（只是模拟挖矿），用作交易 gas 费(只能使用 sepolia 以太坊作为 gas 费)
+3. 进入 LDO 网站 https://www.coinuxdo.me/ 连接钱包，开始使用
+4. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
+5. 视频教程
+   https://www.bilibili.com/video/BV1Yx421Q7tk
+
 ## Quick start
 
 The first things you need to do are cloning this repository and installing its
