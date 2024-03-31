@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { addTaskToSupabase } from "@/utils/supabase/supabaseutils";
-function AddTask({ contract, userAddress }) {
+interface AddTaskProps {
+  contract: any; // 最好替换为更具体的类型
+  userAddress: string;
+}
+function AddTask({ contract, userAddress }: AddTaskProps) {
   const [title, setTitle] = useState("");
   const [reward, setReward] = useState(10);
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     try {
       //如果description不符合链接格式，返回错误
@@ -37,7 +41,7 @@ function AddTask({ contract, userAddress }) {
         quantity
       ); // 添加任务到Supabase
       // alert("Task added successfully!");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to add task:", error);
       alert(
         "Failed to add task. error: " +
@@ -69,7 +73,7 @@ function AddTask({ contract, userAddress }) {
           <input
             type="text"
             value={reward}
-            onChange={(e) => setReward(e.target.value)}
+            onChange={(e) => setReward(Number(e.target.value))}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
@@ -79,7 +83,7 @@ function AddTask({ contract, userAddress }) {
           <input
             type="text"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => setQuantity(Number(e.target.value))}
             required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
