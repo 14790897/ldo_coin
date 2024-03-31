@@ -57,12 +57,13 @@ export async function getTasksFromSupabase(
     let query = supabase
       .from("tasks")
       .select("*")
+      .eq("completed", false) //只要未完成的
       .range(offset, offset + limit - 1)
       .order("task_id", { ascending: true });
 
-    if (!includeCompleted) {
-      query = query.eq("completed", false);
-    }
+    // if (!includeCompleted) {
+    //   query = query.eq("completed", false);
+    // }
 
     const { data, error } = await query;
 
