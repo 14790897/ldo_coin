@@ -36,26 +36,30 @@ export default async function Index() {
         </div>
       </nav>
       <Dapp />
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <p>
-          Powered by{" "}
-          <a
-            href="https://github.com/14790897/ldo_coin"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            LinuxDo Coin
-          </a>
-          <a
-            href="https://github.com/14790897/ldo_coin"
-            target="_blank"
-            className="font-bold text-blue-600 hover:underline hover:text-blue-800"
-            rel="noreferrer"
-          >
-            give me a star in GitHub
-          </a>
-        </p>
+      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs bg-gray-100">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-4">
+          <p>
+            Powered by{" "}
+            <a
+              href="https://github.com/14790897/ldo_coin"
+              target="_blank"
+              className="font-bold hover:underline text-blue-600 hover:text-blue-800"
+              rel="noreferrer"
+            >
+              LinuxDo Coin
+            </a>
+          </p>
+          <p>
+            <a
+              href="https://github.com/14790897/ldo_coin"
+              target="_blank"
+              className="font-bold hover:underline text-blue-600 hover:text-blue-800"
+              rel="noreferrer"
+            >
+              Give me a star on GitHub
+            </a>
+          </p>
+        </div>
       </footer>
     </div>
   );

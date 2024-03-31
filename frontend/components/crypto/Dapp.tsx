@@ -111,12 +111,12 @@ export default class Dapp extends React.Component {
     // If everything is loaded, we render the application.
     return (
       <div className="container p-4">
-        <div className="row">
-          <div className="col-12">
-            <h1>
+        <div className="flex flex-wrap">
+          <div className="w-full">
+            <h1 className="text-3xl font-bold">
               {this.state.tokenData.name} ({this.state.tokenData.symbol})
             </h1>
-            <p>
+            <p className="mt-2">
               Welcome <b>{this.state.selectedAddress}</b>, you have{" "}
               <b>
                 {this.state.balance.toString()} {this.state.tokenData.symbol}

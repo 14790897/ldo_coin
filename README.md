@@ -22,6 +22,12 @@ deploy your contract:
 npx hardhat run scripts/deploy.js --network localhost
 ```
 
+在 sepolia 测试网部署
+
+```sh
+npx hardhat run scripts/deploy.js --network sepolia
+```
+
 Finally, we can run the frontend with:
 
 ```sh
