@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { addTaskToSupabase } from "@/utils/supabase/supabaseutils";
+import { trimTrailingNumbersIfAny } from "@/utils/utils";
 interface AddTaskProps {
   contract: any; // 最好替换为更具体的类型
   userAddress: string;
@@ -19,7 +20,9 @@ function AddTask({ contract, userAddress }: AddTaskProps) {
         return;
       }
       const response = await fetch(
-        `./topic?rss=${description}.rss&quantity=${quantity}`
+        `./topic?rss=${trimTrailingNumbersIfAny(
+          description
+        )}.rss&quantity=${quantity}`
       ); // 获取帖子详情
       const postDetails = await response.json();
 

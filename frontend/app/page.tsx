@@ -45,7 +45,15 @@ export default async function Index() {
             className="font-bold hover:underline"
             rel="noreferrer"
           >
-            LinuxDo Token
+            LinuxDo Coin
+          </a>
+          <a
+            href="https://github.com/14790897/ldo_coin"
+            target="_blank"
+            className="font-bold text-blue-600 hover:underline hover:text-blue-800"
+            rel="noreferrer"
+          >
+            give me a star in GitHub
           </a>
         </p>
       </footer>
