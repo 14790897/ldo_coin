@@ -11,6 +11,7 @@
 5. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
 6. 视频教程
    https://www.bilibili.com/video/BV1Yx421Q7tk
+7. 这是一个[开源项目](https://github.com/14790897/ldo_coin)，前端为 next，数据库为 supabase，使用 hardhat 作为智能合约开发工具，部署在测试网 sepolia，未进行非法集资
 
 ## Quick start
 
