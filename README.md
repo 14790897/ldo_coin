@@ -5,8 +5,11 @@
 1. 在各大插件商店安装 meta mask，这个工具用于和区块链进行交互
 2. 前往 https://sepolia-faucet.pk910.de/ 挖一些 sepolia 以太坊代币（只是模拟挖矿），用作交易 gas 费(因为只能使用 sepolia 以太坊作为 gas 费)
 3. 在 meta mask 手动切换为测试网络 sepolia
-   ![alt text](image-1.png)
-   ![alt text](image-2.png)
+  <div style="display: flex;">
+  <img src="image-1.png" alt="alt text" style="width: 30%; height:20%;padding-right: 10px;">
+  <img src="image-2.png" alt="alt text" style="width: 30%;height:20%;">
+</div>
+
 4. 进入 LDO 网站 https://www.coinuxdo.me/ 连接钱包，开始使用
 5. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
 6. 视频教程
