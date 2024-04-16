@@ -9,12 +9,12 @@
   <img src="image-1.png" alt="alt text" style="width: 30%; height:20%;padding-right: 10px;">
   <img src="image-2.png" alt="alt text" style="width: 30%;height:20%;">
 </div>
-
-4. 进入 LDO 网站 https://www.coinuxdo.me/ 连接钱包，开始使用
-5. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
-6. 视频教程
+4. 手动导入 LDO 代币，点击 import tokens，输入合约地址：0x90b6Aa21eBC98D525fe6e6Ae2CA7089fCAD89857
+5. 进入 LDO 网站 https://www.coinuxdo.me/ 连接钱包，开始使用（okx 钱包似乎有问题，建议 metamask）
+6. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
+7. 视频教程
    https://www.bilibili.com/video/BV1Yx421Q7tk
-7. 这是一个[开源项目](https://github.com/14790897/ldo_coin)，前端为 next，数据库为 supabase，使用 hardhat 作为智能合约开发工具，部署在测试网 sepolia，未进行非法集资
+8. 这是一个[开源项目](https://github.com/14790897/ldo_coin)，前端为 next，数据库为 supabase，使用 hardhat 作为智能合约开发工具，部署在测试网 sepolia，未进行非法集资
 
 ## Quick start
 
