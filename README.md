@@ -8,8 +8,12 @@
   <div style="display: flex;">
   <img src="image-1.png" alt="alt text" style="width: 30%; height:20%;padding-right: 10px;">
   <img src="image-2.png" alt="alt text" style="width: 30%;height:20%;">
-</div>
+  </div>
+
+
 4. 手动导入 LDO 代币，点击 import tokens，输入合约地址：0x90b6Aa21eBC98D525fe6e6Ae2CA7089fCAD89857
+
+
 5. 进入 LDO 网站 https://www.coinuxdo.me/ 连接钱包，开始使用（okx 钱包似乎有问题，建议 metamask）
 6. 添加任务说明： description 填写帖子连接，reward 填写奖励，quantity 填写需要的评论数量（未测试），点击提交
 7. 视频教程
